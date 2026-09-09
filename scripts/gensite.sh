@@ -25,11 +25,12 @@ write_footer() {
 }
 
 relative() {
-    if [ $DEPTH -eq 1 ]; then
-	REL_PATH=""
-    else
-	REL_PATH=$(jot -b "../" -s "" $((DEPTH-1)))
-    fi
+    REL_PATH=""
+    n=1
+    while [ "$n" -lt "$DEPTH" ]; do
+        REL_PATH="../$REL_PATH"
+        n=$((n + 1))
+    done
 }
 
 BUILD_DIR="../slug"
@@ -80,5 +81,6 @@ done
 cp -rp "../images/favicon.ico" "$BUILD_DIR"
 cp -rp "../resources" "$BUILD_DIR"
 cp -rp "../images" "$BUILD_DIR"
+cp -p "../CNAME" "$BUILD_DIR"
 
 touch "$BUILD_DIR"
